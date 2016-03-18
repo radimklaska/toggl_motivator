@@ -25,25 +25,28 @@ $th_t_t = toggl_h($today, $today);
 sleep(1);
 $th_y_y = toggl_h($yesterday, $yesterday);
 
-// Output with descriptions:
-//echo 'Vydelano tento mesic: ' . $tm_cf_cl . "\n" .
-//  'Vydelano minuly mesic: '. $tm_lf_ll . "\n" .
-//  'Zbyvajici pracovni dny: ' . number_of_working_days($today, $c_last) . "\n" .
-//  'Na konci mesice pri tempu 4h/den:' . number_format((convert(number_of_working_days($today, $c_last) * 4 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") .  "\n" .
-//  'Na konci mesice pri tempu 6h/den:' . number_format((convert(number_of_working_days($today, $c_last) * 6 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") .  "\n" .
-//  'Na konci mesice pri tempu 8h/den:' . number_format((convert(number_of_working_days($today, $c_last) * 8 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") .  "\n" .
-//  'Do dnesniho cile zbyva: ' . number_format((8 - $th_t_t), 1, ",", "") . 'h'. "\n" .
-//  'Do vcerejsiho cile zbyva: ' . number_format((8 - $th_y_y), 1, ",", "") . 'h' . "\n";
-
-// Oneliner for use as "always on indicator" in toolbar.
-echo $tm_cf_cl . "/" . $tm_lf_ll . " | " .
-  number_of_working_days($today, $c_last) . "d (" .
-  '4:' . number_format((convert(number_of_working_days($today, $c_last) * 4 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") .  "/" .
-  '6:' . number_format((convert(number_of_working_days($today, $c_last) * 6 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") .  "/" .
-  '8:' . number_format((convert(number_of_working_days($today, $c_last) * 8 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") .  ")" .
-  ' ' . number_format((8 - $th_t_t), 1, ",", "") . 'h'. "/" .
-  number_format((8 - $th_y_y), 1, ",", "") . 'h';
-
+if (php_sapi_name() == "cli") {
+  // In cli-mode
+  // Oneliner for use as "always on indicator" in toolbar.
+  echo $tm_cf_cl . "/" . $tm_lf_ll . " | " .
+    number_of_working_days($today, $c_last) . "d (" .
+    '4:' . number_format((convert(number_of_working_days($today, $c_last) * 4 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . "/" .
+    '6:' . number_format((convert(number_of_working_days($today, $c_last) * 6 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . "/" .
+    '8:' . number_format((convert(number_of_working_days($today, $c_last) * 8 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . ")" .
+    ' ' . number_format((8 - $th_t_t), 1, ",", "") . 'h' . "/" .
+    number_format((8 - $th_y_y), 1, ",", "") . 'h';
+}
+else {
+  // Output with descriptions:
+  echo 'Vydelano tento mesic: ' . $tm_cf_cl . "\n" .
+    'Vydelano minuly mesic: ' . $tm_lf_ll . "\n" .
+    'Zbyvajici pracovni dny: ' . number_of_working_days($today, $c_last) . "\n" .
+    'Na konci mesice pri tempu 4h/den:' . number_format((convert(number_of_working_days($today, $c_last) * 4 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . "\n" .
+    'Na konci mesice pri tempu 6h/den:' . number_format((convert(number_of_working_days($today, $c_last) * 6 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . "\n" .
+    'Na konci mesice pri tempu 8h/den:' . number_format((convert(number_of_working_days($today, $c_last) * 8 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . "\n" .
+    'Do dnesniho cile zbyva: ' . number_format((8 - $th_t_t), 1, ",", "") . 'h' . "\n" .
+    'Do vcerejsiho cile zbyva: ' . number_format((8 - $th_y_y), 1, ",", "") . 'h' . "\n";
+}
 
 function toggl_h($first, $last) {
   $url = "https://www.toggl.com/reports/api/v2/summary?workspace_id=" . TOGGL_WORKSPACE_ID . "&user_ids=" . TOGGL_USER_ID . "&since={$first}&until={$last}&user_agent=" . TOGGL_AGENT . "&api_token=" . TOGGL_TOKEN;
