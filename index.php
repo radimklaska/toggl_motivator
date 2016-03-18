@@ -28,22 +28,22 @@ $th_y_y = toggl_h($yesterday, $yesterday);
 if (php_sapi_name() == "cli") {
   // In cli-mode
   // Oneliner for use as "always on indicator" in toolbar.
-  echo $tm_cf_cl . "/" . $tm_lf_ll . " | " .
+  echo number_format($tm_cf_cl / 1000, 0, ",", " ") . "/" . number_format($tm_lf_ll / 1000, 0, ",", " ") . " | " .
     number_of_working_days($today, $c_last) . "d (" .
-    '4:' . number_format((convert(number_of_working_days($today, $c_last) * 4 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . "/" .
-    '6:' . number_format((convert(number_of_working_days($today, $c_last) * 6 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . "/" .
-    '8:' . number_format((convert(number_of_working_days($today, $c_last) * 8 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . ")" .
+    '4:' . number_format(((convert(number_of_working_days($today, $c_last) * 4 * HOUR_RATE) + $tm_cf_cl) / 1000), 0, ",", "") . "/" .
+    '6:' . number_format(((convert(number_of_working_days($today, $c_last) * 6 * HOUR_RATE) + $tm_cf_cl) / 1000), 0, ",", "") . "/" .
+    '8:' . number_format(((convert(number_of_working_days($today, $c_last) * 8 * HOUR_RATE) + $tm_cf_cl) / 1000), 0, ",", "") . ")" .
     ' ' . number_format((8 - $th_t_t), 1, ",", "") . 'h' . "/" .
     number_format((8 - $th_y_y), 1, ",", "") . 'h';
 }
 else {
   // Output with descriptions:
-  echo 'Vydelano tento mesic: ' . $tm_cf_cl . "\n" .
-    'Vydelano minuly mesic: ' . $tm_lf_ll . "\n" .
+  echo 'Vydelano tento mesic: ' . number_format($tm_cf_cl, 0, ",", " ") . FINAL_CURRENCY . "\n" .
+    'Vydelano minuly mesic: ' . number_format($tm_lf_ll, 0, ",", " ") . FINAL_CURRENCY . "\n" .
     'Zbyvajici pracovni dny: ' . number_of_working_days($today, $c_last) . "\n" .
-    'Na konci mesice pri tempu 4h/den:' . number_format((convert(number_of_working_days($today, $c_last) * 4 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . "\n" .
-    'Na konci mesice pri tempu 6h/den:' . number_format((convert(number_of_working_days($today, $c_last) * 6 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . "\n" .
-    'Na konci mesice pri tempu 8h/den:' . number_format((convert(number_of_working_days($today, $c_last) * 8 * HOUR_RATE) / 1000 + $tm_cf_cl), 0, ",", "") . "\n" .
+    'Na konci mesice pri tempu 4h/den: ' . number_format((convert(number_of_working_days($today, $c_last) * 4 * HOUR_RATE) + $tm_cf_cl), 0, ",", " ") . FINAL_CURRENCY . "\n" .
+    'Na konci mesice pri tempu 6h/den: ' . number_format((convert(number_of_working_days($today, $c_last) * 6 * HOUR_RATE) + $tm_cf_cl), 0, ",", " ") . FINAL_CURRENCY . "\n" .
+    'Na konci mesice pri tempu 8h/den: ' . number_format((convert(number_of_working_days($today, $c_last) * 8 * HOUR_RATE) + $tm_cf_cl), 0, ",", " ") . FINAL_CURRENCY . "\n" .
     'Do dnesniho cile zbyva: ' . number_format((8 - $th_t_t), 1, ",", "") . 'h' . "\n" .
     'Do vcerejsiho cile zbyva: ' . number_format((8 - $th_y_y), 1, ",", "") . 'h' . "\n";
 }
@@ -76,8 +76,7 @@ function toggl_h($first, $last) {
 function toggl_m($first, $last) {
   if ($h = toggl_h($first, $last)) {
     $rate_currency = $h * HOUR_RATE;
-    $final_currency = convert($rate_currency);
-    return number_format($final_currency / 1000, 0, ",", " ");
+    return convert($rate_currency);
   }
   else {
     return "Fail";
