@@ -1,16 +1,14 @@
 <?php
 
-// Toggl API.
-define("TOGGL_AGENT", '');
-define("TOGGL_TOKEN", '');
-define("TOGGL_WORKSPACE_ID", '');
-define("TOGGL_USER_ID", '');
+$config = 'config.php';
+if (file_exists('config.php')) {
+  include $config;
+}
 
-// Info.
-define("HOUR_RATE", 1);
-define("HOUR_RATE_CURRENCY", 'CZK');
-define("FINAL_CURRENCY", 'CZK');
-
+// Quick check.
+if (!defined("TOGGL_TOKEN")) {
+  die("No config!\n");
+}
 
 $l_first = date("Y-m-d", strtotime("first day of last month"));
 $l_last = date("Y-m-d", strtotime("last day of last month"));
