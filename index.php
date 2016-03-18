@@ -1,7 +1,7 @@
 <?php
 
-$config = 'config.php';
-if (file_exists('config.php')) {
+$config = __DIR__ . '/config.php';
+if (file_exists($config)) {
   include $config;
 }
 
