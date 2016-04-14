@@ -39,14 +39,14 @@ if (php_sapi_name() == "cli") {
 }
 else {
   // Output with descriptions:
-  echo 'Vydelano tento mesic: ' . number_format($tm_cf_cl, 0, ",", " ") . FINAL_CURRENCY . "\n" .
-    'Vydelano minuly mesic: ' . number_format($tm_lf_ll, 0, ",", " ") . FINAL_CURRENCY . "\n" .
-    'Zbyvajici pracovni dny: ' . number_of_working_days($tomorrow, $c_last) . "\n" .
-    'Na konci mesice pri tempu 4h/den: ' . number_format((convert(number_of_working_days($tomorrow, $c_last) * 4 * HOUR_RATE) + $tm_cf_cl), 0, ",", " ") . FINAL_CURRENCY . "\n" .
-    'Na konci mesice pri tempu 6h/den: ' . number_format((convert(number_of_working_days($tomorrow, $c_last) * 6 * HOUR_RATE) + $tm_cf_cl), 0, ",", " ") . FINAL_CURRENCY . "\n" .
-    'Na konci mesice pri tempu 8h/den: ' . number_format((convert(number_of_working_days($tomorrow, $c_last) * 8 * HOUR_RATE) + $tm_cf_cl), 0, ",", " ") . FINAL_CURRENCY . "\n" .
-    'Do dnesniho cile zbyva: ' . number_format((8 - $th_t_t), 1, ",", "") . 'h' . "\n" .
-    'Do vcerejsiho cile zbyva: ' . number_format((8 - $th_y_y), 1, ",", "") . 'h' . "\n";
+  echo 'Vydelano tento mesic: ' . number_format($tm_cf_cl, 0, ",", " ") . FINAL_CURRENCY . "<br>" .
+    'Vydelano minuly mesic: ' . number_format($tm_lf_ll, 0, ",", " ") . FINAL_CURRENCY . "<br>" .
+    'Zbyvajici pracovni dny: ' . number_of_working_days($tomorrow, $c_last) . "<br>" .
+    'Na konci mesice pri tempu 4h/den: ' . number_format((convert(number_of_working_days($tomorrow, $c_last) * 4 * HOUR_RATE) + $tm_cf_cl), 0, ",", " ") . FINAL_CURRENCY . "<br>" .
+    'Na konci mesice pri tempu 6h/den: ' . number_format((convert(number_of_working_days($tomorrow, $c_last) * 6 * HOUR_RATE) + $tm_cf_cl), 0, ",", " ") . FINAL_CURRENCY . "<br>" .
+    'Na konci mesice pri tempu 8h/den: ' . number_format((convert(number_of_working_days($tomorrow, $c_last) * 8 * HOUR_RATE) + $tm_cf_cl), 0, ",", " ") . FINAL_CURRENCY . "<br>" .
+    'Do dnesniho cile zbyva: ' . number_format((8 - $th_t_t), 1, ",", "") . 'h' . "<br>" .
+    'Do vcerejsiho cile zbyva: ' . number_format((8 - $th_y_y), 1, ",", "") . 'h' . "<br>";
 }
 
 function toggl_h($first, $last) {
