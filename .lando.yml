@@ -1,0 +1,4 @@
+name: motivator
+recipe: lemp
+config:
+  webroot: .
